@@ -1,23 +1,280 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Corazon</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💜 Mi Corazón 💜</title>
+  <style>
+    /* --- ESTILO GENERAL --- */
+    body {
+      font-family: "Poppins", system-ui, Arial;
+      background: url("Pingu_Pagina/imagenes/fondo.png") no-repeat center center / cover;
+      color: #f7eaff;
+      text-shadow: 0 0 6px #a84aff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* --- CORAZONES FLOTANTES --- */
+    body::before {
+      content: "💜 💜 💜 💜 💜";
+      position: absolute;
+      top: 10%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 1.6rem;
+      animation: floatHearts 6s linear infinite alternate;
+      opacity: 0.7;
+    }
+    @keyframes floatHearts {
+      from { transform: translateY(0); }
+      to { transform: translateY(-20px); }
+    }
+
+    h1, h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #f8d8ff;
+      text-shadow: 0 0 12px #d177ff;
+    }
+
+    /* --- BOTÓN PRINCIPAL --- */
+    #boton {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle at top left, #b44cff, #6a00ff);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px #c46fff, inset 0 0 10px #fff3ff;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+    }
+    #boton:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 10px #ff9fff, inset 0 0 6px #fff;
+    }
+    #boton[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #contador, #tiempo {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 6px 14px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px #b76dff;
+    }
+
+
+    /* --- MODALES --- */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 0, 40, 0.93);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+      z-index: 200;
+      color: #f7eaff;
+      text-align: center;
+      text-shadow: 0 0 6px #bb66ff;
+      animation: fadeIn 0.4s ease;
+    }
+    .modal.show { display: flex; }
+
+    .modal img {
+      width: 220px;
+      border-radius: 14px;
+      box-shadow: 0 0 15px #d287ff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #c77cff, #9b4bff);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 0 10px #e0a3ff;
+      transition: transform 0.1s ease, box-shadow 0.2s;
+    }
+    .btn-green:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px #d48cff;
+    }
+  </style>
 </head>
 <body>
-  <img src="Pingu_Pagina/imagenes/pingui_1.png" alt="Imagen desde mi PC">
-  <h1>Gerente del proyecto a cargo Torinn</h1>
-  <h1>Desarrollador a cargo Diego💜</h1>
+  <h1>💜 Mi Corazón 💜</h1>
+
+  <!-- Pantalla de bienvenida -->
+  <div id="pantallaInicio" class="modal show">
+    <p>💜 Bienvenida, mi corazón 💜</p>
+    <p>Mi corazon de kiwi espero te guste esta pagina, la hice con mucho amor para ti</p>
+    <p>Puede que estas ultimas semanas no hemos hablado mucho</p>
+    <p>Siento que estamos mas distantes, y mis cosas cursis han bajado mucho</p>
+    <p>Pero recuerda algo siempre estas en mi mente y por eso me preocupo tanto por ti</p>
+    <p>Te amo con todo mi corazon de pato y te quiero de forma infinita</p>
+    <p>Con mucho amor patito💜🦆</p>
+    <div class="controls">
+      <button id="comenzar" class="btn-green">Comenzar</button>
+    </div>
+  </div>
+
+  <!-- Juego principal -->
+  <div id="juego" style="display:none; text-align:center;">
+    <h2>💜 ¡Haz clics lo más rápido posible! 💜</h2>
+    <button id="boton">Clic</button>
+    <div id="contador">Clics: 0</div>
+    <div id="tiempo">Tiempo restante: 30s</div>
+  </div>
+
+  <!-- Modales de recompensas -->
+  <div id="modalPremio" class="modal">
+    <p>💜 ¡Felicidades! Ganaste un super premio 💜</p>
+    <p>Si quieres saber cuál es, manda una captura al desarrollador 😎</p>
+    <div class="controls"><button class="btn-green reiniciar">Jugar de nuevo</button></div>
+  </div>
+
+  <div id="modalEaster1" class="modal">
+    <p>🔒 Código cifrado:</p>
+    <p style="font-family:monospace;font-size:1.2rem" id="codigoCifrado"></p>
+    <img src="Pingu_Pagina/imagenes/anillodesenfoque.jpg" alt="easter1">
+    <div class="controls"><button class="btn-green reiniciar">Jugar de nuevo</button></div>
+  </div>
+
+  <div id="modalEaster2" class="modal">
+    <p>💍 Segundo secreto desbloqueado...</p>
+    <img src="Pingu_Pagina/imagenes/anillo.jpg" alt="easter2">
+    <div class="controls">
+      <button id="aceptar" class="btn-green">Aceptar</button>
+    </div>
+  </div>
+
+<script>
+  let clics = 0;
+  const ROUND_SECONDS = 30;
+  let remaining = ROUND_SECONDS;
+  let timeInterval = null;
+  let roundTimeout = null;
+
+  const boton = document.getElementById('boton');
+  const contador = document.getElementById('contador');
+  const tiempoDiv = document.getElementById('tiempo');
+  const modalPremio = document.getElementById('modalPremio');
+  const modalE1 = document.getElementById('modalEaster1');
+  const codigoCifrado = document.getElementById('codigoCifrado');
+  const modalE2 = document.getElementById('modalEaster2');
+  const pantallaInicio = document.getElementById('pantallaInicio');
+  const juego = document.getElementById('juego');
+  const comenzar = document.getElementById('comenzar');
+
+  comenzar.addEventListener('click', () => {
+    pantallaInicio.style.display = 'none';
+    juego.style.display = 'block';
+    startRound();
+  });
+
+  function cesar(text, shift) {
+    return text.split('').map(ch => {
+      if(/[a-zA-Z]/.test(ch)){
+        const base = ch === ch.toUpperCase() ? 65 : 97;
+        return String.fromCharCode(((ch.charCodeAt(0)-base + shift) % 26) + base);
+      }
+      return ch;
+    }).join('');
+  }
+
+  function startRound() {
+    clics = 0;
+    remaining = ROUND_SECONDS;
+    boton.disabled = false;
+    contador.textContent = `Clics: ${clics}`;
+    tiempoDiv.textContent = `Tiempo restante: ${remaining}s`;
+    hideAllModals();
+
+    timeInterval = setInterval(() => {
+      remaining--;
+      tiempoDiv.textContent = `Tiempo restante: ${remaining}s`;
+      if (remaining <= 0) endRound();
+    }, 1000);
+
+    roundTimeout = setTimeout(endRound, ROUND_SECONDS * 1000);
+  }
+
+  function hideAllModals() {
+    document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
+  }
+
+  function openModal(modal) {
+    hideAllModals();
+    modal.classList.add('show');
+    boton.disabled = true;
+    clearTimers();
+  }
+
+  function clearTimers() {
+    clearTimeout(roundTimeout);
+    clearInterval(timeInterval);
+  }
+
+  boton.addEventListener('click', () => {
+    clics++;
+    contador.textContent = `Clics: ${clics}`;
+  });
+
+  function endRound() {
+    clearTimers();
+    boton.disabled = true;
+
+    if (clics >= 100) {
+      openModal(modalE2);
+    } else if (clics >= 50) {
+      const cifrado = cesar('promise ring', 16);
+      codigoCifrado.textContent = cifrado;
+      openModal(modalE1);
+    } else if (clics > 22) {
+      openModal(modalPremio);
+    } else {
+      alert(`Tu resultado fue ${clics} clics 💔 Intenta superar 22 para ganar un premio 💜`);
+      startRound();
+    }
+  }
+
+  document.getElementById('aceptar').addEventListener('click', () => {
+    modalE2.innerHTML = '<p>💐 Bueno, a tus órdenes bella dama 💜</p><div class="controls"><button class="btn-green reiniciar">Cerrar</button></div>';
+    document.querySelector('.reiniciar').addEventListener('click', () => startRound());
+  });
+
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('reiniciar')) startRound();
+  });
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
