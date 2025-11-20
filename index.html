@@ -1,283 +1,258 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>💜 Mi Corazón 💜</title>
+  <title>💜Carta💜</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    /* --- ESTILO GENERAL --- */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      font-family: "Poppins", system-ui, Arial;
-      background: url("Pingu_Pagina/imagenes/fondo.png") no-repeat center center / cover;
-      color: #f7eaff;
-      text-shadow: 0 0 6px #a84aff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* --- CORAZONES FLOTANTES --- */
-    body::before {
-      content: "💜 💜 💜 💜 💜";
-      position: absolute;
-      top: 10%;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 1.6rem;
-      animation: floatHearts 6s linear infinite alternate;
-      opacity: 0.7;
-    }
-    @keyframes floatHearts {
-      from { transform: translateY(0); }
-      to { transform: translateY(-20px); }
-    }
-
-    h1, h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: #f8d8ff;
-      text-shadow: 0 0 12px #d177ff;
-    }
-
-    /* --- BOTÓN PRINCIPAL --- */
-    #boton {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: none;
-      background: radial-gradient(circle at top left, #b44cff, #6a00ff);
-      color: #fff;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px #c46fff, inset 0 0 10px #fff3ff;
-      transition: transform 0.1s ease, box-shadow 0.2s ease;
-    }
-    #boton:active {
-      transform: scale(0.95);
-      box-shadow: 0 0 10px #ff9fff, inset 0 0 6px #fff;
-    }
-    #boton[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    #contador, #tiempo {
-      margin-top: 10px;
-      font-size: 1.1rem;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 6px 14px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px #b76dff;
-    }
-
-
-    /* --- MODALES --- */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 0, 40, 0.93);
-      display: none;
+      font-family:'Crimson Text', Georgia, serif;
+      background: radial-gradient(circle at 10% 10%, #efe7d6 0%, #f7f3ea 30%, #e8dfd0 100%);
+      display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      gap: 12px;
-      padding: 20px;
-      z-index: 200;
-      color: #f7eaff;
-      text-align: center;
-      text-shadow: 0 0 6px #bb66ff;
-      animation: fadeIn 0.4s ease;
-    }
-    .modal.show { display: flex; }
-
-    .modal img {
-      width: 220px;
-      border-radius: 14px;
-      box-shadow: 0 0 15px #d287ff;
+      padding: 40px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* CONTENEDOR DE LA CARTA (OCULTO AL INICIO) */
+    #letterContainer {
+      position: absolute;
+      top:50%;
+      left:50%;
+      transform: translate(-50%, -50%) scale(0.94);
+      width:100%;
+      display:flex;
+      justify-content:center;
+      opacity:0;
+      transition: opacity 1s ease;
+      pointer-events:none;
     }
 
-    .controls {
-      display: flex;
-      gap: 12px;
-      margin-top: 8px;
+    .paper-wrap {
+      width:900px;
+      max-width:95%;
+      background:linear-gradient(180deg,#f9f3e6 0%,#f2ead9 100%);
+      padding:56px 64px;
+      border-radius:12px;
+      box-shadow:0 18px 40px rgba(20,20,20,0.25);
+      border:1px solid rgba(0,0,0,0.06);
+      position:relative;
+      overflow:hidden;
+      margin:auto;
     }
 
-    .btn-green {
-      background: linear-gradient(135deg, #c77cff, #9b4bff);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-      font-weight: 700;
-      box-shadow: 0 0 10px #e0a3ff;
-      transition: transform 0.1s ease, box-shadow 0.2s;
+    .paper-wrap::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:radial-gradient(circle at 20% 10%, rgba(0,0,0,0.02), transparent 4%),
+                       radial-gradient(circle at 80% 90%, rgba(0,0,0,0.01), transparent 6%);
+      opacity:0.6;
+      pointer-events:none;
     }
-    .btn-green:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px #d48cff;
+
+    header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:22px;
     }
+
+    .crest {
+      font-family:'Playfair Display', serif;
+      font-weight:700;
+      font-size:28px;
+      letter-spacing:2px;
+      color:#670296;
+    }
+
+    .date { font-size:14px;color:#5b4b3c; }
+
+    .letter-body {
+      line-height:1.7;
+      color:#521852;
+      font-size:18px;
+    }
+
+    .greeting {
+      font-family:'Playfair Display',serif;
+      font-size:28px;
+      margin:8px 0 6px;
+    }
+
+    .body-text p:first-of-type {
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+
+    .dropcap {
+      font-size:64px;
+      font-weight:700;
+      color:#521852;
+      font-family:'Playfair Display',serif;
+    }
+
+    .signature {
+      margin-top:28px;
+      font-family:'Playfair Display',serif;
+      font-size:20px;
+      color:#670296;
+    }
+
+    /* SELLO VISIBLE AL INICIO */
+    #sealBtn {
+      position:relative;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #b33 0%, #7a0b0b 60%);
+      box-shadow:0 6px 18px rgba(122,11,11,0.45), inset 0 -6px 18px rgba(0,0,0,0.2);
+      border:none;
+      cursor:pointer;
+      font-size:32px;
+      color:#ffd9d9;
+      font-family:'Playfair Display', serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:.3s;
+      z-index:10;
+    }
+
+    #sealBtn:hover {
+      transform:scale(1.05);
+    }
+
+    /* SOLO PARA EL EFECTO DE SELLO */
+    #sealBtn.ripple::after {
+      content:"";
+      position:absolute;
+      inset:-6px;
+      border-radius:50%;
+      box-shadow:0 0 0 6px rgba(255,215,215,0.15);
+      animation:ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+      from { transform:scale(0.8); opacity:0.8 }
+      to   { transform:scale(1.8); opacity:0 }
+    }
+
+    .controls { display:none; }
+
   </style>
 </head>
+
 <body>
-  <h1>💜 Mi Corazón 💜</h1>
 
-  <!-- Pantalla de bienvenida -->
-  <div id="pantallaInicio" class="modal show">
-    <p>💜 Bienvenida, mi corazón 💜</p>
-    <p>Mi corazon de kiwi espero te guste esta pagina, la hice con mucho amor para ti</p>
-    <p>Puede que estas ultimas semanas no hemos hablado mucho</p>
-    <p>Siento que estamos mas distantes, y mis cosas cursis han bajado mucho</p>
-    <p>Pero recuerda algo siempre estas en mi mente y por eso me preocupo tanto por ti</p>
-    <p>Te amo con todo mi corazon de pato y te quiero de forma infinita</p>
-    <p>Con mucho amor patito💜🦆</p>
-    <div class="controls">
-      <button id="comenzar" class="btn-green">Comenzar</button>
-    </div>
+  <!-- SELLO INICIAL -->
+  <button id="sealBtn">D</button>
+
+  <!-- CARTA (OCULTA AL INICIO) -->
+  <div id="letterContainer">
+    <main class="paper-wrap">
+
+      <header>
+        <div class="crest">Patito</div>
+        <div class="date" id="date">A la fecha</div>
+      </header>
+
+      <article class="letter-body">
+
+        <div class="greeting">Mi reina preciosa</div>
+
+        <section class="body-text" id="letterText">
+          <p>
+            <span class="type" data-full="
+Mi vida preciosa te escribo esta cartica para expresarte el amor inmenso que te tengo, tu sonrisa ilumina mis dias, tu voz es algo que jamas me cansare de escuchar, debes ver como se me iluminan mis ojos cuando veo una foto tuya, o como sonrio cuando te escucho reir
+            "></span>
+          </p>
+
+          <p>
+            <span class="type" data-full="
+Lo que mas admiro de ti es la paciencia que me tienes, no solo a la hora de escuchar mis pendejadas, sino tambien cuando no entiendo una referencia, no solo es la paciencia sino es la forma en que siempre sales a delante, eres una persona que admiro demasiado, no solo por lo que ya mencione, sino por miles de factores mas, tu creatividad, tu forma de ser directa es lo que mas me encanta de ti mi reina
+            "></span>
+          </p>
+
+          <p>
+            <span class="type" data-full="
+Mi cielo, el amor que yo siento hacia ti es algo que no se puede cuantificar, es como el numero pi infinito e irracional, infinito porque nunca me cansare de amarte, siempre voy a seguir amandote hasta mi ultimo aliento, e irracional ya que los dos somos personas bastantes espontaneas, somos personas que solemos cometer muchas locuras, nosotros no le tenemos miedo al exito, como se dice actualmente entendemos nuestra vibra, nuestra vibra no es solo cometer locurar es escuchar atentamente un chisme, es mirarnos con nuestros ojos de complices, es pedir dos cosas diferentes del menu para probar mas, son tantas cosas que hacen que nuestra vibra sea unica y diferente, por eso te amo tanto, porque nos leemos los pensamientos muchas veces, y nunca me cansare de decirlo Ti Amo Mi Pingu 🐧
+            "></span>
+          </p>
+
+          <div class="signature">
+            Con mucho amor<br><strong>Tu pequeño patito 🦆</strong>
+          </div>
+        </section>
+
+      </article>
+    </main>
   </div>
 
-  <!-- Juego principal -->
-  <div id="juego" style="display:none; text-align:center;">
-    <h2>💜 Dale pegale al boton pegale 💜</h2>
-    <button id="boton">Clic</button>
-    <div id="contador">Clics: 0</div>
-    <div id="tiempo">Tiempo restante: 30s</div>
-  </div>
 
-  <!-- Modales de recompensas -->
-  <div id="modalPremio" class="modal">
-    <p>💜 Ganas de mi kiwi jsjsjsjs 💜</p>
-    <p>Si quieres saber cuál es, manda una captura al desarrollador 😎</p>
-    <p>O sigue jugando y en tal vez si llegas a 100 lo veras jskjskjss </p>
-    <div class="controls"><button class="btn-green reiniciar">Jugar de nuevo</button></div>
-  </div>
+  <script>
+    /* FECHA AUTOMÁTICA */
+    (function(){
+      const d = new Date();
+      const month = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      document.getElementById('date').textContent =
+        d.getDate() + ' de ' + month[d.getMonth()] + ' de ' + d.getFullYear();
+    })();
 
-  <div id="modalEaster1" class="modal">
-    <p>🔒 Código cifrado:</p>
-    <p style="font-family:monospace;font-size:1.2rem" id="codigoCifrado"></p>
-    <img src="Pingu_Pagina/imagenes/anillodesenfoque.jpg" alt="easter1">
-    <div class="controls"><button class="btn-green reiniciar">Jugar de nuevo</button></div>
-  </div>
 
-  <div id="modalEaster2" class="modal">
-    <p>💍 Tu anillo de promesa</p>
-    <img src="Pingu_Pagina/imagenes/anillo.jpg" alt="easter2">
-    <div class="controls">
-      <button id="aceptar" class="btn-green">Aceptar</button>
-    </div>
-  </div>
+    /* TIPEAR TODOS LOS PÁRRAFOS */
+    function typeAllParagraphs() {
+      const spans = document.querySelectorAll(".type");
+      let index = 0;
 
-<script>
-  let clics = 0;
-  const ROUND_SECONDS = 30;
-  let remaining = ROUND_SECONDS;
-  let timeInterval = null;
-  let roundTimeout = null;
+      function typeNext() {
+        if (index >= spans.length) return;
 
-  const boton = document.getElementById('boton');
-  const contador = document.getElementById('contador');
-  const tiempoDiv = document.getElementById('tiempo');
-  const modalPremio = document.getElementById('modalPremio');
-  const modalE1 = document.getElementById('modalEaster1');
-  const codigoCifrado = document.getElementById('codigoCifrado');
-  const modalE2 = document.getElementById('modalEaster2');
-  const pantallaInicio = document.getElementById('pantallaInicio');
-  const juego = document.getElementById('juego');
-  const comenzar = document.getElementById('comenzar');
+        const el = spans[index];
+        const text = el.dataset.full.trim();
+        el.textContent = "";
 
-  comenzar.addEventListener('click', () => {
-    pantallaInicio.style.display = 'none';
-    juego.style.display = 'block';
-    startRound();
-  });
+        let i = 0;
+        const speed = 25;
 
-  function cesar(text, shift) {
-    return text.split('').map(ch => {
-      if(/[a-zA-Z]/.test(ch)){
-        const base = ch === ch.toUpperCase() ? 65 : 97;
-        return String.fromCharCode(((ch.charCodeAt(0)-base + shift) % 26) + base);
+        const writing = setInterval(() => {
+          el.textContent += text.charAt(i);
+          i++;
+          if(i >= text.length){
+            clearInterval(writing);
+            index++;
+            setTimeout(typeNext, 400);
+          }
+        }, speed);
       }
-      return ch;
-    }).join('');
-  }
 
-  function startRound() {
-    clics = 0;
-    remaining = ROUND_SECONDS;
-    boton.disabled = false;
-    contador.textContent = `Clics: ${clics}`;
-    tiempoDiv.textContent = `Tiempo restante: ${remaining}s`;
-    hideAllModals();
-
-    timeInterval = setInterval(() => {
-      remaining--;
-      tiempoDiv.textContent = `Tiempo restante: ${remaining}s`;
-      if (remaining <= 0) endRound();
-    }, 1000);
-
-    roundTimeout = setTimeout(endRound, ROUND_SECONDS * 1000);
-  }
-
-  function hideAllModals() {
-    document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
-  }
-
-  function openModal(modal) {
-    hideAllModals();
-    modal.classList.add('show');
-    boton.disabled = true;
-    clearTimers();
-  }
-
-  function clearTimers() {
-    clearTimeout(roundTimeout);
-    clearInterval(timeInterval);
-  }
-
-  boton.addEventListener('click', () => {
-    clics++;
-    contador.textContent = `Clics: ${clics}`;
-  });
-
-  function endRound() {
-    clearTimers();
-    boton.disabled = true;
-
-    if (clics >= 100) {
-      openModal(modalE2);
-    } else if (clics >= 50) {
-      const cifrado = cesar('promise ring', 16);
-      codigoCifrado.textContent = cifrado;
-      openModal(modalE1);
-    } else if (clics > 22) {
-      openModal(modalPremio);
-    } else {
-      alert(`Tu resultado fue ${clics} clics 💔 Intenta superar 22 para ganar un premio 💜`);
-      startRound();
+      typeNext();
     }
-  }
 
-  document.getElementById('aceptar').addEventListener('click', () => {
-    modalE2.innerHTML = '<p>💐 Bueno, a tus órdenes bella dama 💜</p><div class="controls"><button class="btn-green reiniciar">Cerrar</button></div>';
-    document.querySelector('.reiniciar').addEventListener('click', () => startRound());
-  });
 
-  document.addEventListener('click', e => {
-    if (e.target.classList.contains('reiniciar')) startRound();
-  });
-</script>
+    /* MOSTRAR CARTA + ANIMACIÓN */
+    const seal = document.getElementById("sealBtn");
+    const carta = document.getElementById("letterContainer");
+
+    seal.addEventListener("click", () => {
+      seal.classList.add("ripple");
+
+      setTimeout(() => {
+        seal.style.display = "none";      // quitar el sello
+        carta.style.opacity = "1";        // mostrar carta
+        carta.style.pointerEvents = "auto";
+        typeAllParagraphs();              // comenzar a escribir
+      }, 1200);
+    });
+
+  </script>
+
 </body>
 </html>
-
-
