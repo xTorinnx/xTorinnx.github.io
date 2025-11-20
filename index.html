@@ -20,7 +20,7 @@
       padding: 40px;
     }
 
-    /* CONTENEDOR DE LA CARTA (OCULTO AL INICIO) */
+  
     #letterContainer {
       position: absolute;
       top:50%;
@@ -106,7 +106,7 @@
       color:#670296;
     }
 
-    /* SELLO VISIBLE AL INICIO */
+
     #sealBtn {
       position:relative;
       width:120px;
@@ -130,7 +130,7 @@
       transform:scale(1.05);
     }
 
-    /* SOLO PARA EL EFECTO DE SELLO */
+
     #sealBtn.ripple::after {
       content:"";
       position:absolute;
@@ -152,10 +152,10 @@
 
 <body>
 
-  <!-- SELLO INICIAL -->
+
   <button id="sealBtn">D</button>
 
-  <!-- CARTA (OCULTA AL INICIO) -->
+
   <div id="letterContainer">
     <main class="paper-wrap">
 
@@ -198,7 +198,7 @@ Mi cielo, el amor que yo siento hacia ti es algo que no se puede cuantificar, es
 
 
   <script>
-    /* FECHA AUTOMÁTICA */
+
     (function(){
       const d = new Date();
       const month = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -207,7 +207,7 @@ Mi cielo, el amor que yo siento hacia ti es algo que no se puede cuantificar, es
     })();
 
 
-    /* TIPEAR TODOS LOS PÁRRAFOS */
+
     function typeAllParagraphs() {
       const spans = document.querySelectorAll(".type");
       let index = 0;
@@ -237,7 +237,6 @@ Mi cielo, el amor que yo siento hacia ti es algo que no se puede cuantificar, es
     }
 
 
-    /* MOSTRAR CARTA + ANIMACIÓN */
     const seal = document.getElementById("sealBtn");
     const carta = document.getElementById("letterContainer");
 
@@ -245,10 +244,10 @@ Mi cielo, el amor que yo siento hacia ti es algo que no se puede cuantificar, es
       seal.classList.add("ripple");
 
       setTimeout(() => {
-        seal.style.display = "none";      // quitar el sello
-        carta.style.opacity = "1";        // mostrar carta
+        seal.style.display = "none";    
+        carta.style.opacity = "1";        
         carta.style.pointerEvents = "auto";
-        typeAllParagraphs();              // comenzar a escribir
+        typeAllParagraphs();              
       }, 1200);
     });
 
@@ -256,3 +255,4 @@ Mi cielo, el amor que yo siento hacia ti es algo que no se puede cuantificar, es
 
 </body>
 </html>
+
